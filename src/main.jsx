@@ -24,8 +24,18 @@ function City() {
   </group>;
 }
 
+function blocked(position) {
+  const radius = 0.58;
+  return BUILDINGS.some((b) => Math.abs(position.x - b.x) < 1.6 + radius && Math.abs(position.z - b.z) < 1.6 + radius);
+}
+
 function Player({ onInteract }) {
   const ref = useRef();
+  const body = useRef();
+  const leftArm = useRef();
+  const rightArm = useRef();
+  const leftLeg = useRef();
+  const rightLeg = useRef();
   const keys = useRef({});
   const velocity = useRef(new THREE.Vector3());
   const { camera } = useThree();
@@ -37,18 +47,31 @@ function Player({ onInteract }) {
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
   }, []);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!ref.current) return;
     const k = keys.current;
     const input = new THREE.Vector3((k.d || k.arrowright ? 1 : 0) - (k.a || k.arrowleft ? 1 : 0), 0, (k.s || k.arrowdown ? 1 : 0) - (k.w || k.arrowup ? 1 : 0));
     const moving = input.lengthSq() > 0;
     if (moving) input.normalize();
+
     const speed = k.shift ? 6.2 : 3.5;
-    velocity.current.lerp(input.multiplyScalar(speed), 1 - Math.pow(0.001, delta));
-    ref.current.position.addScaledVector(velocity.current, delta);
-    ref.current.position.x = THREE.MathUtils.clamp(ref.current.position.x, -13.5, 13.5);
-    ref.current.position.z = THREE.MathUtils.clamp(ref.current.position.z, -13.5, 13.5);
+    const targetVelocity = input.multiplyScalar(speed);
+    velocity.current.lerp(targetVelocity, 1 - Math.pow(0.001, delta));
+
+    const next = ref.current.position.clone().addScaledVector(velocity.current, delta);
+    if (!blocked(new THREE.Vector3(next.x, 0, ref.current.position.z))) ref.current.position.x = THREE.MathUtils.clamp(next.x, -13.5, 13.5);
+    if (!blocked(new THREE.Vector3(ref.current.position.x, 0, next.z))) ref.current.position.z = THREE.MathUtils.clamp(next.z, -13.5, 13.5);
+
     if (moving) ref.current.rotation.y = Math.atan2(velocity.current.x, velocity.current.z);
+
+    const stride = moving ? Math.sin(state.clock.elapsedTime * (k.shift ? 12 : 9)) : 0;
+    if (leftArm.current && rightArm.current && leftLeg.current && rightLeg.current) {
+      leftArm.current.rotation.x = stride * 0.65;
+      rightArm.current.rotation.x = -stride * 0.65;
+      leftLeg.current.rotation.x = -stride * 0.7;
+      rightLeg.current.rotation.x = stride * 0.7;
+    }
+    if (body.current) body.current.position.y = moving ? Math.abs(Math.sin(state.clock.elapsedTime * (k.shift ? 12 : 9))) * 0.035 : 0;
 
     const target = ref.current.position.clone().add(new THREE.Vector3(0, 1.15, 0));
     const desired = target.clone().add(new THREE.Vector3(5.5, 4.1, 6.5));
@@ -64,9 +87,15 @@ function Player({ onInteract }) {
   });
 
   return <group ref={ref} position={[0, 0.65, 3]}>
-    <mesh castShadow><capsuleGeometry args={[0.38, 0.85, 6, 12]} /><meshStandardMaterial color="#b08a43" metalness={0.3} roughness={0.45} /></mesh>
-    <mesh position={[0, 0.78, 0]} castShadow><sphereGeometry args={[0.34, 16, 16]} /><meshStandardMaterial color="#d8b06a" roughness={0.5} /></mesh>
-    <mesh position={[0, 1.1, -0.04]}><boxGeometry args={[0.45, 0.06, 0.08]} /><meshStandardMaterial color="#08090c" /></mesh>
+    <group ref={body}>
+      <mesh castShadow><capsuleGeometry args={[0.38, 0.85, 6, 12]} /><meshStandardMaterial color="#b08a43" metalness={0.3} roughness={0.45} /></mesh>
+      <mesh position={[0, 0.78, 0]} castShadow><sphereGeometry args={[0.34, 16, 16]} /><meshStandardMaterial color="#d8b06a" roughness={0.5} /></mesh>
+      <mesh position={[0, 1.1, -0.04]}><boxGeometry args={[0.45, 0.06, 0.08]} /><meshStandardMaterial color="#08090c" /></mesh>
+    </group>
+    <mesh ref={leftArm} position={[-0.46, 0.18, 0]} castShadow><capsuleGeometry args={[0.11, 0.55, 4, 8]} /><meshStandardMaterial color="#9d783d" /></mesh>
+    <mesh ref={rightArm} position={[0.46, 0.18, 0]} castShadow><capsuleGeometry args={[0.11, 0.55, 4, 8]} /><meshStandardMaterial color="#9d783d" /></mesh>
+    <mesh ref={leftLeg} position={[-0.18, -0.48, 0]} castShadow><capsuleGeometry args={[0.13, 0.65, 4, 8]} /><meshStandardMaterial color="#5e4b2e" /></mesh>
+    <mesh ref={rightLeg} position={[0.18, -0.48, 0]} castShadow><capsuleGeometry args={[0.13, 0.65, 4, 8]} /><meshStandardMaterial color="#5e4b2e" /></mesh>
     <pointLight position={[0, 1, 0]} intensity={0.7} distance={3} color="#f4c86b" />
   </group>;
 }
