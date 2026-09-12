@@ -12,7 +12,9 @@ const BUILDINGS = [
 ];
 
 function blocked(position, radius = 0.58) {
-  return BUILDINGS.some((b) => Math.abs(position.x - b.x) < 1.6 + radius && Math.abs(position.z - b.z) < 1.6 + radius);
+  return BUILDINGS.some((b) =>
+    Math.abs(position.x - b.x) < 1.6 + radius && Math.abs(position.z - b.z) < 1.6 + radius
+  );
 }
 
 function City() {
@@ -79,7 +81,11 @@ function Player({ activeVehicle, setActiveVehicle, onInteract }) {
   const ref = useRef();
   const keys = useRef({});
   const velocity = useRef(new THREE.Vector3());
-  const { camera } = useThree();
+  const cameraYaw = useRef(0.62);
+  const cameraPitch = useRef(0.48);
+  const dragging = useRef(false);
+  const lastPointer = useRef({ x: 0, y: 0 });
+  const { camera, gl } = useThree();
 
   useEffect(() => {
     const down = (e) => { keys.current[e.key.toLowerCase()] = true; };
@@ -95,6 +101,35 @@ function Player({ activeVehicle, setActiveVehicle, onInteract }) {
     return () => window.removeEventListener('keydown', exit);
   }, [activeVehicle, setActiveVehicle]);
 
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const start = (e) => {
+      if (activeVehicle || e.button !== 2) return;
+      dragging.current = true;
+      lastPointer.current = { x: e.clientX, y: e.clientY };
+    };
+    const move = (e) => {
+      if (!dragging.current || activeVehicle) return;
+      const dx = e.clientX - lastPointer.current.x;
+      const dy = e.clientY - lastPointer.current.y;
+      lastPointer.current = { x: e.clientX, y: e.clientY };
+      cameraYaw.current -= dx * 0.006;
+      cameraPitch.current = THREE.MathUtils.clamp(cameraPitch.current - dy * 0.004, 0.2, 0.9);
+    };
+    const stop = () => { dragging.current = false; };
+    const context = (e) => e.preventDefault();
+    canvas.addEventListener('pointerdown', start);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', stop);
+    canvas.addEventListener('contextmenu', context);
+    return () => {
+      canvas.removeEventListener('pointerdown', start);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', stop);
+      canvas.removeEventListener('contextmenu', context);
+    };
+  }, [gl, activeVehicle]);
+
   useFrame((state, delta) => {
     if (!ref.current || activeVehicle) return;
     const k = keys.current;
@@ -105,23 +140,44 @@ function Player({ activeVehicle, setActiveVehicle, onInteract }) {
     );
     const moving = input.lengthSq() > 0;
     if (moving) input.normalize();
+
     const speed = k.shift ? 6 : 3.4;
     velocity.current.lerp(input.multiplyScalar(speed), 1 - Math.pow(0.001, delta));
     const next = ref.current.position.clone().addScaledVector(velocity.current, delta);
-    if (!blocked(new THREE.Vector3(next.x, 0, ref.current.position.z))) ref.current.position.x = THREE.MathUtils.clamp(next.x, -13.5, 13.5);
-    if (!blocked(new THREE.Vector3(ref.current.position.x, 0, next.z))) ref.current.position.z = THREE.MathUtils.clamp(next.z, -13.5, 13.5);
-    if (moving) ref.current.rotation.y = Math.atan2(velocity.current.x, velocity.current.z);
-    const target = ref.current.position.clone().add(new THREE.Vector3(0, 1.1, 0));
-    const desired = target.clone().add(new THREE.Vector3(5.5, 4.1, 6.5));
-    camera.position.lerp(desired, 1 - Math.pow(0.002, delta));
+
+    if (!blocked(new THREE.Vector3(next.x, 0, ref.current.position.z))) {
+      ref.current.position.x = THREE.MathUtils.clamp(next.x, -13.5, 13.5);
+    }
+    if (!blocked(new THREE.Vector3(ref.current.position.x, 0, next.z))) {
+      ref.current.position.z = THREE.MathUtils.clamp(next.z, -13.5, 13.5);
+    }
+
+    if (moving) {
+      ref.current.rotation.y = THREE.MathUtils.lerp(
+        ref.current.rotation.y,
+        Math.atan2(velocity.current.x, velocity.current.z),
+        1 - Math.pow(0.0001, delta)
+      );
+    }
+
+    const target = ref.current.position.clone().add(new THREE.Vector3(0, 1.0, 0));
+    const distance = 6.8;
+    const horizontal = Math.cos(cameraPitch.current) * distance;
+    const desired = target.clone().add(new THREE.Vector3(
+      Math.sin(cameraYaw.current) * horizontal,
+      Math.sin(cameraPitch.current) * distance,
+      Math.cos(cameraYaw.current) * horizontal
+    ));
+    camera.position.lerp(desired, 1 - Math.pow(0.0015, delta));
     camera.lookAt(target);
+
     let nearest = null;
-    let distance = Infinity;
+    let nearestDistance = Infinity;
     BUILDINGS.forEach((b) => {
       const d = ref.current.position.distanceTo(new THREE.Vector3(b.x, 0, b.z));
-      if (d < distance) { distance = d; nearest = b; }
+      if (d < nearestDistance) { nearestDistance = d; nearest = b; }
     });
-    onInteract(distance < 3.1 ? nearest : null);
+    onInteract(nearestDistance < 3.1 ? nearest : null);
     ref.current.position.y = 0.65 + Math.abs(Math.sin(state.clock.elapsedTime * 9)) * (moving ? 0.035 : 0);
   });
 
@@ -152,7 +208,11 @@ function Car({ active, onEnter }) {
   const ref = useRef();
   const keys = useRef({});
   const velocity = useRef(0);
-  const { camera } = useThree();
+  const cameraYaw = useRef(0.72);
+  const cameraPitch = useRef(0.4);
+  const dragging = useRef(false);
+  const lastPointer = useRef({ x: 0, y: 0 });
+  const { camera, gl } = useThree();
 
   useEffect(() => {
     const down = (e) => { keys.current[e.key.toLowerCase()] = true; };
@@ -162,6 +222,35 @@ function Car({ active, onEnter }) {
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
   }, []);
 
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const start = (e) => {
+      if (!active || e.button !== 2) return;
+      dragging.current = true;
+      lastPointer.current = { x: e.clientX, y: e.clientY };
+    };
+    const move = (e) => {
+      if (!dragging.current || !active) return;
+      const dx = e.clientX - lastPointer.current.x;
+      const dy = e.clientY - lastPointer.current.y;
+      lastPointer.current = { x: e.clientX, y: e.clientY };
+      cameraYaw.current -= dx * 0.006;
+      cameraPitch.current = THREE.MathUtils.clamp(cameraPitch.current - dy * 0.004, 0.18, 0.75);
+    };
+    const stop = () => { dragging.current = false; };
+    const context = (e) => e.preventDefault();
+    canvas.addEventListener('pointerdown', start);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', stop);
+    canvas.addEventListener('contextmenu', context);
+    return () => {
+      canvas.removeEventListener('pointerdown', start);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', stop);
+      canvas.removeEventListener('contextmenu', context);
+    };
+  }, [gl, active]);
+
   useFrame((_, delta) => {
     if (!ref.current || !active) return;
     const k = keys.current;
@@ -170,14 +259,25 @@ function Car({ active, onEnter }) {
     const maxSpeed = k.shift ? 8 : 5;
     velocity.current = THREE.MathUtils.lerp(velocity.current, throttle * maxSpeed, 1 - Math.pow(0.01, delta));
     ref.current.rotation.y -= steer * delta * (Math.abs(velocity.current) / maxSpeed) * 1.6;
+
     const forward = new THREE.Vector3(Math.sin(ref.current.rotation.y), 0, Math.cos(ref.current.rotation.y));
     const next = ref.current.position.clone().addScaledVector(forward, velocity.current * delta);
     if (!blocked(new THREE.Vector3(next.x, 0, next.z), 0.95)) {
       ref.current.position.x = THREE.MathUtils.clamp(next.x, -13.5, 13.5);
       ref.current.position.z = THREE.MathUtils.clamp(next.z, -13.5, 13.5);
-    } else velocity.current = 0;
+    } else {
+      velocity.current = 0;
+    }
+
     const target = ref.current.position.clone().add(new THREE.Vector3(0, 1.1, 0));
-    camera.position.lerp(target.clone().add(new THREE.Vector3(5.8, 3.6, 6.8)), 1 - Math.pow(0.002, delta));
+    const distance = 8.0;
+    const horizontal = Math.cos(cameraPitch.current) * distance;
+    const desired = target.clone().add(new THREE.Vector3(
+      Math.sin(cameraYaw.current) * horizontal,
+      Math.sin(cameraPitch.current) * distance,
+      Math.cos(cameraYaw.current) * horizontal
+    ));
+    camera.position.lerp(desired, 1 - Math.pow(0.0015, delta));
     camera.lookAt(target);
   });
 
@@ -255,11 +355,11 @@ function App() {
       <div className="hud">
         <div className="brand">ABHIJIT CITY</div>
         <div className="mission"><span className="eyebrow">NEW MISSION</span><strong>EXPLORE THE DEVELOPER</strong></div>
-        <div className="controls">[WASD] MOVE &nbsp; [SHIFT] RUN &nbsp; [E] INTERACT / EXIT</div>
+        <div className="controls">[WASD] MOVE &nbsp; [SHIFT] RUN &nbsp; [RMB] CAMERA &nbsp; [E] INTERACT / EXIT</div>
         <div className="status">{activeVehicle ? 'VEHICLE ACTIVE' : 'ON FOOT'}</div>
       </div>
       {nearby && !panel && !activeVehicle && <div className="interact">[E] ENTER {nearby.label}</div>}
-      {activeVehicle && <div className="driving">[WASD] DRIVE &nbsp; [SHIFT] BOOST &nbsp; [E] EXIT</div>}
+      {activeVehicle && <div className="driving">[WASD] DRIVE &nbsp; [SHIFT] BOOST &nbsp; [RMB] CAMERA &nbsp; [E] EXIT</div>}
       {panel && (
         <div className="panel">
           <button onClick={() => setPanel(null)}>×</button>
