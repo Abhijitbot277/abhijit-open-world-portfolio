@@ -152,3 +152,28 @@ linear-gradient(135deg,#02050a,#07111f 55%,#03050b)}
 .about-highlights>div{transition:transform .2s ease,border-color .2s ease}
 .about-highlights>div:hover{transform:translateY(-4px);border-color:#365b79}
 @media(max-width:800px){.profile-cards{grid-template-columns:1fr}}
+
+/* Immersive 3D scene layer inspired by the referenced portfolios */
+.scroll-progress{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#8d7cff,#43a9ff,#67f59a);z-index:1000;box-shadow:0 0 14px #5d8dff66}
+.cursor-glow{position:fixed;left:0;top:0;width:220px;height:220px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,#5d8dff12,transparent 68%);filter:blur(3px);will-change:transform}
+.hero-visual{perspective:1200px;isolation:isolate;transform-style:preserve-3d}
+.hero-visual:before{content:"";position:absolute;inset:9% 4%;border:1px solid #31516b33;border-radius:50%;transform:rotateX(62deg) rotateZ(-8deg);box-shadow:0 0 70px #3e78ff0d;pointer-events:none}
+.hero-visual:after{content:"";position:absolute;width:330px;height:330px;border-radius:50%;background:radial-gradient(circle,#3f8cff0b,transparent 68%);filter:blur(18px);pointer-events:none}
+.scene-grid{position:absolute;width:520px;height:320px;left:50%;top:53%;transform:translate(-50%,-50%) rotateX(65deg) rotateZ(-8deg);background:linear-gradient(#3e638018 1px,transparent 1px),linear-gradient(90deg,#3e638018 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 70%,transparent);opacity:.65}
+.scene-label{position:absolute;z-index:8;font:700 8px/1 "Space Grotesk";letter-spacing:.2em;color:#68829a;border:1px solid #24445a;background:#06111bd9;padding:7px 9px;border-radius:5px;backdrop-filter:blur(8px)}
+.label-top{left:6%;top:12%}.label-bottom{right:4%;bottom:10%}
+.planet{transition:transform .18s ease-out;will-change:transform;box-shadow:inset -38px -30px 55px #000b,0 0 40px #31e8ff66,0 0 100px #1cc9ff20,0 0 0 1px #7bdfff22}
+.planet i{position:absolute;width:44%;height:18%;border-radius:50%;left:28%;top:25%;background:#fff3;filter:blur(16px);transform:rotate(-20deg)}
+.planet-ring{position:absolute;width:440px;height:170px;border:1px solid #9c8cff44;border-radius:50%;transform:rotate(19deg) rotateX(58deg);z-index:1;box-shadow:0 0 30px #665cff0d;transition:transform .18s ease-out}
+.scene-node{position:absolute;z-index:9;display:flex;flex-direction:column;gap:3px;padding:9px 11px;border:1px solid #294963;background:#06121dd9;border-radius:8px;backdrop-filter:blur(10px);box-shadow:0 10px 30px #0005}
+.scene-node b{font:800 11px "Space Grotesk";color:#dceaff}.scene-node small{font-size:7px;letter-spacing:.14em;color:#68839a}
+.node-one{left:3%;top:30%}.node-two{right:4%;top:63%}
+.hero-visual [data-depth]{will-change:transform;transition:transform .12s ease-out}
+.hero-visual .planet[data-depth]{animation:planetDrift 9s ease-in-out infinite}
+.project-card{transform-style:preserve-3d;will-change:transform}
+.project-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff08,transparent 35%,transparent 65%,#5d8dff07);pointer-events:none}
+.project-card:after{content:"";position:absolute;right:-45px;top:-45px;width:150px;height:150px;border-radius:50%;border:1px solid #4d76a522;box-shadow:0 0 45px #4d76a511;pointer-events:none}
+.nav nav a.active:after{box-shadow:0 0 12px #67f59a55}
+@media(max-width:900px){.cursor-glow{display:none}.scene-grid{width:420px}.planet-ring{width:360px;height:140px}}
+@media(max-width:600px){.hero-visual{overflow:hidden}.scene-grid{width:360px;height:260px}.scene-label{font-size:7px}.node-one{left:0}.node-two{right:0}.planet-ring{width:300px;height:115px}}
+@media(prefers-reduced-motion:reduce){.cursor-glow,.scroll-progress{display:none}.hero-visual [data-depth]{transform:none!important;transition:none}.project-card{transform:none!important}}
