@@ -134,3 +134,10 @@ linear-gradient(135deg,#02050a,#07111f 55%,#03050b)}
 @media(max-width:900px){.hero-quick-links{grid-column:1;max-width:none}.cursor-line{display:none}}
 @media(max-width:600px){.hero-quick-links{grid-template-columns:1fr}.hero-badge{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.cursor-line{display:none}}
+
+.about-copy{display:grid;gap:18px}.about-grid> .about-copy p{font-size:15px;color:#aebcca;margin:0;line-height:1.8}
+.about-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px}
+.about-highlights>div{padding:18px;border:1px solid #1b3548;border-radius:12px;background:#07131e}
+.about-highlights strong{display:block;color:#79aaff;font:700 10px "Space Grotesk";letter-spacing:.16em;margin-bottom:8px}
+.about-highlights span{color:#8194a7;font-size:11px;line-height:1.6}
+@media(max-width:700px){.about-highlights{grid-template-columns:1fr}}
