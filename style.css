@@ -714,3 +714,101 @@ body:after{
   body{background-position:center top}
   .hero:before{width:430px;height:430px;right:-180px}
 }
+
+
+/* True CSS 3D space scene */
+.hero-visual[data-3d-scene]{
+  perspective:1200px;
+  transform-style:preserve-3d;
+  --mx:0deg;--my:0deg;--px:0px;--py:0px;
+  transform:rotateX(var(--my)) rotateY(var(--mx));
+  transition:transform .18s ease-out;
+  will-change:transform;
+}
+.hero-visual[data-3d-scene]>*{transform-style:preserve-3d}
+.hero-visual[data-3d-scene] .planet,
+.hero-visual[data-3d-scene] .planet-3d{
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate3d(-50%,-50%,90px);
+}
+.planet-3d{
+  width:260px;height:260px;border-radius:50%;
+  filter:drop-shadow(0 35px 40px rgba(0,0,0,.55));
+  z-index:5;
+}
+.planet-surface{
+  position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  background:
+    radial-gradient(circle at 32% 23%,rgba(255,255,255,.95) 0 2%,transparent 6%),
+    radial-gradient(ellipse at 40% 34%,rgba(94,177,255,.35) 0 8%,transparent 18%),
+    radial-gradient(ellipse at 62% 62%,rgba(173,87,255,.25) 0 10%,transparent 22%),
+    radial-gradient(circle at 36% 30%,#536fe8 0 9%,#293a9d 24%,#121956 49%,#070b2b 68%,#020512 83%);
+  box-shadow:inset -55px -45px 70px rgba(0,0,0,.85),inset 20px 15px 35px rgba(176,220,255,.22);
+}
+.planet-surface:before,.planet-surface:after{
+  content:"";position:absolute;inset:10%;border-radius:50%;
+  border:1px solid rgba(129,205,255,.12);transform:rotate(-22deg) scaleY(.35);
+}
+.planet-surface:after{inset:25% -4%;transform:rotate(18deg) scaleY(.18);border-color:rgba(192,119,255,.13)}
+.planet-surface span{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font:700 58px/1 "Space Grotesk";color:#edf8ff;
+  text-shadow:0 0 24px #60dfff,0 0 55px #657bff99;
+}
+.planet-highlight{
+  position:absolute;inset:-3%;border-radius:50%;
+  border:1px solid rgba(163,222,255,.7);
+  box-shadow:0 0 25px rgba(75,185,255,.28),inset 0 0 18px rgba(113,182,255,.18);
+  transform:translateZ(12px);
+}
+.planet-glow{
+  position:absolute;inset:-30px;border-radius:50%;
+  background:radial-gradient(circle,rgba(75,120,255,.22),rgba(172,66,255,.10) 45%,transparent 70%);
+  filter:blur(18px);transform:translateZ(-25px);
+  animation:planetGlow3d 5s ease-in-out infinite alternate;
+}
+.scene-depth{
+  position:absolute;width:580px;height:580px;left:50%;top:50%;border-radius:50%;
+  transform:translate3d(-50%,-50%,-120px);
+  background:radial-gradient(circle,rgba(70,95,255,.14),rgba(173,66,255,.07) 35%,transparent 68%);
+  filter:blur(25px);
+  pointer-events:none;
+}
+.scene-depth-back{animation:depthPulse 9s ease-in-out infinite alternate}
+.scene-star{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:#e9fbff;box-shadow:0 0 14px #68dcff,0 0 28px #687cff;
+  transform:translate3d(var(--px),var(--py),-20px);
+  animation:starFloat3d 6s ease-in-out infinite alternate;
+}
+.star-1{left:12%;top:22%}.star-2{left:78%;top:18%;animation-delay:1.2s}.star-3{left:72%;top:72%;animation-delay:2.3s}.star-4{left:20%;top:68%;animation-delay:3.1s}
+.scene-float-card{
+  position:absolute;z-index:8;min-width:105px;padding:11px 13px;
+  border:1px solid rgba(119,154,255,.35);border-radius:10px;
+  background:linear-gradient(145deg,rgba(12,19,42,.82),rgba(4,8,20,.7));
+  backdrop-filter:blur(10px);
+  box-shadow:0 18px 35px rgba(0,0,0,.35),0 0 25px rgba(74,102,255,.10);
+  transform:translate3d(var(--px),var(--py),70px) rotateX(-4deg) rotateY(-8deg);
+  transition:transform .18s ease-out,border-color .2s ease;
+}
+.scene-float-card:hover{border-color:#68cfff;transform:translate3d(var(--px),var(--py),95px) rotateX(0) rotateY(0) scale(1.04)}
+.scene-float-card small,.scene-float-card span{display:block;color:#6f83a4;font:600 8px "Space Grotesk";letter-spacing:.13em}
+.scene-float-card b{display:block;margin:3px 0;color:#f2f6ff;font:700 16px "Space Grotesk"}
+.card-a{left:3%;top:24%}.card-b{right:2%;top:34%;transform:translate3d(var(--px),var(--py),110px) rotateY(10deg)}.card-c{right:10%;bottom:12%;transform:translate3d(var(--px),var(--py),55px) rotateX(5deg) rotateY(-5deg)}
+.hero-visual[data-3d-scene] .planet-orbit{transform:translate3d(-50%,-50%,35px) rotateX(64deg) rotateZ(0deg)}
+.hero-visual[data-3d-scene] .orbit-two{transform:translate3d(-50%,-50%,5px) rotateX(70deg) rotateZ(18deg)}
+.hero-visual[data-3d-scene] .asteroid{transform-style:preserve-3d}
+.hero-visual[data-3d-scene] .hero-note{transform:translateZ(100px)}
+@keyframes planetGlow3d{from{transform:translateZ(-25px) scale(.92);opacity:.5}to{transform:translateZ(-25px) scale(1.08);opacity:1}}
+@keyframes depthPulse{from{transform:translate3d(-50%,-50%,-140px) scale(.94);opacity:.55}to{transform:translate3d(-50%,-50%,-70px) scale(1.05);opacity:1}}
+@keyframes starFloat3d{from{opacity:.35;transform:translate3d(var(--px),var(--py),-20px) scale(.7)}to{opacity:1;transform:translate3d(var(--px),var(--py),50px) scale(1.25)}}
+@media(max-width:900px){
+  .hero-visual[data-3d-scene]{transform:none;perspective:none}
+  .scene-float-card{transform:none}
+  .hero-visual[data-3d-scene] .planet-orbit,.hero-visual[data-3d-scene] .orbit-two{transform:translate3d(-50%,-50%,0) rotateX(64deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-visual[data-3d-scene]{transform:none;transition:none}
+  .planet-glow,.scene-depth,.scene-star{animation:none}
+}
