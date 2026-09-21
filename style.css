@@ -141,3 +141,14 @@ linear-gradient(135deg,#02050a,#07111f 55%,#03050b)}
 .about-highlights strong{display:block;color:#79aaff;font:700 10px "Space Grotesk";letter-spacing:.16em;margin-bottom:8px}
 .about-highlights span{color:#8194a7;font-size:11px;line-height:1.6}
 @media(max-width:700px){.about-highlights{grid-template-columns:1fr}}
+
+/* 3D portfolio enhancements inspired by the referenced React/Three.js portfolio */
+.profile-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.profile-card{min-height:190px;padding:24px;border:1px solid #23435a;border-radius:18px;background:linear-gradient(145deg,#0a1b2a,#06111b);box-shadow:0 18px 45px #0004;transition:transform .18s ease,border-color .2s ease,box-shadow .2s ease;transform-style:preserve-3d}
+.profile-card:hover{border-color:#4b76a0;box-shadow:0 22px 55px #0007}
+.profile-card-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:22px;border:1px solid #31506c;border-radius:12px;background:#0b1b2b;color:#8db8ff;font-size:18px}
+.profile-card strong{display:block;font:700 17px "Space Grotesk";color:#f2f6fa}
+.profile-card p{margin:9px 0 0;color:#8194a7;font-size:11px;line-height:1.7}
+.about-highlights>div{transition:transform .2s ease,border-color .2s ease}
+.about-highlights>div:hover{transform:translateY(-4px);border-color:#365b79}
+@media(max-width:800px){.profile-cards{grid-template-columns:1fr}}
