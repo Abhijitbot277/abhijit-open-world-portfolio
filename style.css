@@ -451,3 +451,192 @@ footer{
   .hero-note strong{font-size:10px}
   .hero-note small{font-size:8px}
 }
+
+
+/* Full galaxy atmosphere */
+html{background:#010208}
+body{background:#010208;color:#f7f9ff}
+body:before{
+ content:"";position:fixed;inset:-20%;z-index:-12;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 15% 25%,rgba(68,88,255,.20),transparent 30%),
+ radial-gradient(ellipse at 78% 18%,rgba(0,207,255,.16),transparent 28%),
+ radial-gradient(ellipse at 65% 72%,rgba(153,45,255,.17),transparent 32%),
+ radial-gradient(ellipse at 28% 82%,rgba(18,111,255,.13),transparent 28%),
+ radial-gradient(ellipse at 50% 48%,rgba(255,255,255,.035),transparent 38%);
+ filter:blur(18px);
+ animation:galaxyBreath 18s ease-in-out infinite alternate;
+}
+body:after{
+ content:"";position:fixed;inset:0;z-index:-11;pointer-events:none;opacity:.7;
+ background:
+ radial-gradient(circle at 8% 18%,#fff 0 1px,transparent 1.5px),
+ radial-gradient(circle at 24% 76%,#a9d9ff 0 .8px,transparent 1.5px),
+ radial-gradient(circle at 42% 12%,#fff 0 .7px,transparent 1.4px),
+ radial-gradient(circle at 67% 38%,#d7b8ff 0 .9px,transparent 1.5px),
+ radial-gradient(circle at 91% 71%,#fff 0 1px,transparent 1.5px),
+ radial-gradient(circle at 78% 88%,#9ee9ff 0 .8px,transparent 1.5px);
+ background-size:220px 220px,310px 310px,260px 260px,340px 340px,290px 290px,250px 250px;
+ animation:starField 90s linear infinite;
+}
+.space-bg{z-index:-8;opacity:.85}
+.space-bg:before{
+ width:90vw;height:45vw;right:-18%;top:4%;
+ background:
+ radial-gradient(ellipse at center,rgba(105,74,255,.16),transparent 50%),
+ radial-gradient(ellipse at center,rgba(0,208,255,.10),transparent 65%);
+ filter:blur(38px);
+ transform:rotate(-17deg);
+}
+.space-bg span{width:2px;height:2px;background:#fff;box-shadow:0 0 12px #8fdcff}
+.space-bg span:after{
+ width:100px;background:linear-gradient(90deg,#9fe4ff,transparent);
+ opacity:.7;
+}
+.nav{
+ background:rgba(2,4,14,.72);
+ border-bottom:1px solid rgba(119,144,255,.18);
+ box-shadow:0 8px 40px rgba(0,0,0,.25);
+}
+.nav:after{
+ content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+ background:linear-gradient(90deg,transparent,#5f83ff66,#62ddff55,transparent);
+}
+.brand-mark{
+ color:#b8c8ff;
+ text-shadow:0 0 18px rgba(102,134,255,.6);
+}
+.nav nav a:hover,.nav nav a.active{color:#eef3ff}
+.nav nav a.active:after{
+ background:linear-gradient(90deg,#7b78ff,#54dfff);
+ box-shadow:0 0 12px #6d91ff88;
+}
+.hero{
+ min-height:760px;
+}
+.hero:before{
+ content:"";position:absolute;inset:4% 5% 8% 42%;border-radius:50%;
+ background:radial-gradient(ellipse,rgba(69,85,255,.10),transparent 62%);
+ filter:blur(25px);pointer-events:none;
+}
+.hero-badge{
+ background:rgba(8,12,30,.72);
+ border-color:#3b4c8b;
+ box-shadow:0 0 25px rgba(87,105,255,.12);
+}
+.hero-badge span{background:#72dfff;box-shadow:0 0 12px #72dfff}
+.hero h1 span{
+ background:linear-gradient(105deg,#ffffff 5%,#8e9bff 42%,#4fdcff 75%,#c77cff);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+ text-shadow:0 0 45px rgba(86,112,255,.14);
+}
+.hero-quick-links div{
+ background:rgba(8,12,25,.62);
+ border-color:rgba(102,126,194,.20);
+ backdrop-filter:blur(12px);
+}
+.hero-quick-links div:hover{border-color:#536bb2;box-shadow:0 0 24px rgba(75,104,255,.12)}
+.hero-visual:before{
+ content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+ background:radial-gradient(circle,rgba(53,110,255,.15),rgba(94,48,255,.08) 35%,transparent 68%);
+ filter:blur(20px);
+ animation:nebulaPulse 8s ease-in-out infinite;
+}
+.planet{
+ width:250px;height:250px;
+ background:
+ radial-gradient(circle at 30% 23%,#eefcff 0 3%,#b8e7ff 6%,#5574d4 17%,#243c92 34%,#11164d 55%,#060b28 73%,#020512 82%);
+ box-shadow:
+ inset -45px -34px 62px #000d,
+ inset 15px 8px 28px rgba(160,211,255,.20),
+ 0 0 30px rgba(92,133,255,.42),
+ 0 0 100px rgba(70,82,255,.20);
+}
+.planet:before{
+ border-color:#9cc9ff88;
+ box-shadow:0 0 35px rgba(93,141,255,.18);
+}
+.planet:after{
+ border-color:#63d9ffcc;
+ box-shadow:0 0 20px rgba(80,218,255,.30);
+}
+.planet span{
+ color:#eef8ff;
+ text-shadow:0 0 25px rgba(104,216,255,.7);
+}
+.orbit{
+ border-color:#66bfff77;
+ box-shadow:0 0 22px rgba(69,183,255,.10);
+}
+.orbit:after{
+ background:#e5fbff;
+ box-shadow:0 0 14px #65ddff,0 0 34px #6385ff;
+}
+.orbit-two{
+ border-color:#b084ff55;
+ box-shadow:0 0 20px rgba(163,91,255,.12);
+}
+.orbit-two:after{
+ background:#f2e9ff;
+ box-shadow:0 0 13px #c58cff,0 0 30px #745bff;
+}
+.hero-note{
+ border-left-color:#5967ad;
+}
+.hero-note strong{color:#dce5ff}
+.hero-note small{color:#8290ae}
+.project-card,.profile-card,.about-highlights>div,.skill-list span{
+ background:linear-gradient(145deg,rgba(11,14,30,.82),rgba(6,9,20,.72));
+ border-color:rgba(91,110,177,.22);
+ backdrop-filter:blur(10px);
+}
+.project-card:before{
+ background:linear-gradient(#7d79ff,#4de2ff,#b36cff);
+ box-shadow:0 0 15px rgba(90,117,255,.45);
+}
+.project-card:hover{
+ border-color:#5368a1;
+ box-shadow:0 18px 55px rgba(31,41,102,.25),0 0 25px rgba(78,104,255,.08);
+}
+.mini-visual{
+ background:radial-gradient(circle at 50% 55%,rgba(72,100,255,.24),rgba(19,26,65,.18) 55%,transparent 72%);
+}
+.section{border-top-color:rgba(92,112,174,.16)}
+.facts,.timeline{border-top-color:rgba(92,112,174,.18)}
+.facts div,.timeline div{border-bottom-color:rgba(92,112,174,.15)}
+.section h2 span{color:#91b2ff;text-shadow:0 0 30px rgba(102,135,255,.12)}
+.profile-card-icon{
+ background:linear-gradient(145deg,#11183b,#090d20);
+ border-color:#354274;color:#9fb6ff;
+ box-shadow:inset 0 0 20px rgba(82,102,255,.08);
+}
+.cursor-line{
+ background:linear-gradient(transparent,#718cff,#5de4ff,#718cff,transparent);
+ box-shadow:0 0 8px rgba(98,136,255,.35);
+}
+footer{border-top-color:rgba(92,112,174,.16)}
+.modal-backdrop{background:rgba(1,2,12,.88)}
+.modal-card{
+ background:linear-gradient(145deg,rgba(12,15,34,.97),rgba(5,8,18,.97));
+ border-color:#344274;
+ box-shadow:0 30px 100px rgba(22,31,91,.45);
+}
+.modal-detail>div{
+ background:rgba(9,12,27,.78);
+ border-color:rgba(82,103,170,.18);
+}
+@keyframes galaxyBreath{
+ from{transform:scale(1) rotate(0deg)}
+ to{transform:scale(1.08) rotate(3deg)}
+}
+@keyframes starField{
+ from{transform:translate3d(0,0,0) rotate(0deg)}
+ to{transform:translate3d(-70px,40px,0) rotate(2deg)}
+}
+@keyframes nebulaPulse{
+ 0%,100%{transform:scale(.92);opacity:.55}
+ 50%{transform:scale(1.08);opacity:1}
+}
+@media(max-width:900px){
+ .hero:before{inset:15% 0 10% 0}
+}
