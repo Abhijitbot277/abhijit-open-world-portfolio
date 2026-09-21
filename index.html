@@ -5,9 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Abhijit Singha — Electrical Engineering student, developer and problem solver.">
 <title>Abhijit Singha — Portfolio</title>
-<link rel="stylesheet" href="style.css?v=3d-20260922">
+<link rel="stylesheet" href="style.css?v=galaxy3d-20260922">
 </head>
 <body>
+<div class="galaxy-3d-bg" aria-hidden="true">
+  <div class="galaxy-star-layer galaxy-stars-back"></div>
+  <div class="galaxy-nebula"></div>
+  <div class="galaxy-arm galaxy-arm-a"></div>
+  <div class="galaxy-arm galaxy-arm-b"></div>
+  <div class="galaxy-core"></div>
+  <div class="galaxy-star-layer galaxy-stars-front"></div>
+  <div class="galaxy-dust"></div>
+</div>
 <div class="space-bg"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <header class="nav">
@@ -133,6 +142,23 @@ window.addEventListener("pointermove",e=>{
 },{passive:true});
 const scene=document.querySelector("[data-3d-scene]");
 scene?.addEventListener("pointerleave",()=>{scene.style.setProperty("--mx","0deg");scene.style.setProperty("--my","0deg");scene.style.setProperty("--px","0px");scene.style.setProperty("--py","0px")});
+const galaxyBg=document.querySelector(".galaxy-3d-bg");
+let galaxyTick=false;
+window.addEventListener("pointermove",e=>{
+  if(!galaxyBg || galaxyTick)return;
+  galaxyTick=true;
+  requestAnimationFrame(()=>{
+    const x=(e.clientX/window.innerWidth-.5), y=(e.clientY/window.innerHeight-.5);
+    galaxyBg.style.setProperty("--gx",`${x*5}deg`);
+    galaxyBg.style.setProperty("--gy",`${-y*4}deg`);
+    galaxyBg.style.setProperty("--gz",`${x*18}px`);
+    galaxyTick=false;
+  });
+},{passive:true});
+window.addEventListener("scroll",()=>{
+  if(!galaxyBg)return;
+  galaxyBg.style.setProperty("--scroll-depth",`${window.scrollY*.035}px`);
+},{passive:true});
 
 const projects={
 apex:{
