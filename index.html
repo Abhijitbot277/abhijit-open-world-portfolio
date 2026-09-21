@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Abhijit Singha — Electrical Engineering student, developer and problem solver.">
 <title>Abhijit Singha — Portfolio</title>
-<link rel="stylesheet" href="style.css?v=galaxy-20260922">
+<link rel="stylesheet" href="style.css?v=3d-20260922">
 </head>
 <body>
 <div class="space-bg"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -29,9 +29,20 @@
 <div class="socials"><a href="https://github.com/Abhijitbot277" target="_blank" rel="noreferrer">GitHub</a><a href="#contact">LinkedIn</a><a href="#contact">Email</a></div>
 </div>
 <div class="hero-quick-links" aria-label="Quick profile highlights"><div><span>01</span><b>Engineering</b><small>EEE · SVIST</small></div><div><span>02</span><b>AI Fundamentals</b><small>Learning & experimenting</small></div><div><span>03</span><b>Problem Solving</b><small>Projects · Hackathons</small></div></div>
-<div class="hero-visual">
-<div class="orbit planet-orbit"></div><div class="planet"><span>AS</span></div><div class="orbit orbit-two"></div>
+<div class="hero-visual" data-3d-scene>
+<div class="scene-depth scene-depth-back"></div>
+<div class="scene-star star-1"></div><div class="scene-star star-2"></div><div class="scene-star star-3"></div><div class="scene-star star-4"></div>
+<div class="orbit planet-orbit"></div>
+<div class="planet-3d">
+  <div class="planet-glow"></div>
+  <div class="planet-surface"><span>AS</span></div>
+  <div class="planet-highlight"></div>
+</div>
+<div class="orbit orbit-two"></div>
 <div class="asteroid a1"></div><div class="asteroid a2"></div><div class="asteroid a3"></div>
+<div class="scene-float-card card-a"><small>01</small><b>EEE</b><span>ENGINEERING</span></div>
+<div class="scene-float-card card-b"><small>02</small><b>AI</b><span>EXPLORATION</span></div>
+<div class="scene-float-card card-c"><small>03</small><b>BUILD</b><span>PROJECTS</span></div>
 <div class="hero-note"><span>01</span><strong>Engineering × Technology</strong><small>Learning by building practical solutions.</small></div>
 </div>
 <div class="scroll-cue">⌄<small>SCROLL DOWN</small></div>
@@ -109,7 +120,19 @@ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{i
 revealItems.forEach(el=>revealObserver.observe(el));
 
 const cursorLine=document.querySelector(".cursor-line");
-window.addEventListener("pointermove",e=>{cursorLine.style.transform=`translate3d(${e.clientX}px,${e.clientY}px,0)`},{passive:true});
+window.addEventListener("pointermove",e=>{
+  cursorLine.style.transform=`translate3d(${e.clientX}px,${e.clientY}px,0)`;
+  const scene=document.querySelector("[data-3d-scene]");
+  if(scene && window.matchMedia("(min-width:901px)").matches){
+    const x=(e.clientX/window.innerWidth-.5), y=(e.clientY/window.innerHeight-.5);
+    scene.style.setProperty("--mx",`${x*18}deg`);
+    scene.style.setProperty("--my",`${-y*14}deg`);
+    scene.style.setProperty("--px",`${x*28}px`);
+    scene.style.setProperty("--py",`${y*20}px`);
+  }
+},{passive:true});
+const scene=document.querySelector("[data-3d-scene]");
+scene?.addEventListener("pointerleave",()=>{scene.style.setProperty("--mx","0deg");scene.style.setProperty("--my","0deg");scene.style.setProperty("--px","0px");scene.style.setProperty("--py","0px")});
 
 const projects={
 apex:{
