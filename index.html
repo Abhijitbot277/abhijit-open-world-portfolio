@@ -69,10 +69,15 @@
 <div><span>Interests</span><b>Projects · Hackathons · Innovation</b></div>
 </div>
 </div>
-<div class="about-highlights">
+<div class="about-highlights" data-tilt-group>
 <div><strong>BUILD</strong><span>Learn through real projects and experiments.</span></div>
 <div><strong>EXPLORE</strong><span>Stay curious about AI, engineering and emerging technology.</span></div>
 <div><strong>GROW</strong><span>Improve technical, creative and communication skills over time.</span></div>
+</div>
+<div class="profile-cards">
+<div class="profile-card" data-tilt><span class="profile-card-icon">⚡</span><strong>Engineering Mindset</strong><p>Learning to approach problems logically through my Electrical & Electronics Engineering foundation.</p></div>
+<div class="profile-card" data-tilt><span class="profile-card-icon">◈</span><strong>AI Exploration</strong><p>Exploring AI fundamentals and experimenting with AI-assisted tools to understand practical use cases.</p></div>
+<div class="profile-card" data-tilt><span class="profile-card-icon">✦</span><strong>Creative Builder</strong><p>Combining design, presentation and technology to turn ideas into clear project experiences.</p></div>
 </div>
 </section>
 <section class="section hidden-section reveal" id="education"><p class="section-kicker">02 — EDUCATION & EXPERIENCE</p><h2>Building my <span>foundation.</span></h2><div class="timeline"><div>B.Tech in Electrical & Electronics Engineering <small>SVIST · MAKAUT · 1ST YEAR · CURRENT</small></div><div>AI Fundamentals <small>AI-focused learning and certification · Corizo</small></div><div>Student Ambassador — Corizo EdTech <small>Summer Internship Program 2026 · Student outreach & communication</small></div></div></section>
@@ -96,6 +101,9 @@
 <footer><span>© 2026 Abhijit Singha</span><span>Built with HTML & CSS</span></footer>
 
 <script>
+const tiltItems=document.querySelectorAll("[data-tilt]");
+tiltItems.forEach(card=>card.addEventListener("pointermove",e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;card.style.transform=\`perspective(700px) rotateX(\${-y*7}deg) rotateY(\${x*7}deg) translateY(-3px)\`; }));
+tiltItems.forEach(card=>card.addEventListener("pointerleave",()=>{card.style.transform=""}));
 const revealItems=document.querySelectorAll(".reveal");
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}}),{threshold:.12});
 revealItems.forEach(el=>revealObserver.observe(el));
