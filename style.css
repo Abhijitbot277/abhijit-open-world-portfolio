@@ -1011,3 +1011,75 @@ body:after{
 @media(prefers-reduced-motion:reduce){
   .galaxy-arm,.galaxy-nebula,.galaxy-core,.galaxy-stars-back,.galaxy-stars-front,.galaxy-dust{animation:none}
 }
+
+
+/* Cinematic 3D galaxy artwork — replaces the flat CSS galaxy */
+.galaxy-3d-bg{
+  position:fixed;
+  inset:-7vh -5vw;
+  z-index:-20;
+  pointer-events:none;
+  overflow:hidden;
+  perspective:1400px;
+  transform-style:preserve-3d;
+  background:#02030f;
+  transform:translate3d(var(--gz,0px),0,0) rotateX(var(--gy,0deg)) rotateY(var(--gx,0deg));
+  transition:transform .8s cubic-bezier(.2,.8,.2,1);
+}
+.galaxy-3d-bg img{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:108%;
+  height:108%;
+  max-width:none;
+  transform:translate(-50%,-50%) translateZ(0) rotateX(2deg) scale(1.04);
+  object-fit:cover;
+  object-position:center center;
+  filter:saturate(1.08) contrast(1.04) brightness(.82);
+  opacity:.98;
+  animation:galaxyArtworkFloat 18s ease-in-out infinite alternate;
+}
+.galaxy-3d-bg:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    radial-gradient(ellipse at 50% 48%,transparent 25%,#03051a22 58%,#01030d99 100%),
+    linear-gradient(180deg,#01030d22 0%,transparent 35%,#01030d55 100%);
+  mix-blend-mode:multiply;
+}
+.galaxy-3d-bg:after{
+  content:"";
+  position:absolute;
+  inset:-15%;
+  z-index:3;
+  background:radial-gradient(ellipse at 50% 50%,transparent 35%,#00051a55 72%,#00030d99 100%);
+  animation:galaxyVignette 8s ease-in-out infinite alternate;
+}
+body:before{
+  opacity:.12;
+}
+body:after{
+  opacity:.18;
+}
+.space-bg{
+  opacity:.22;
+}
+@keyframes galaxyArtworkFloat{
+  0%{transform:translate(-50%,-50%) translate3d(-10px,7px,0) rotateX(2deg) rotateZ(-.15deg) scale(1.04)}
+  50%{transform:translate(-50%,-50%) translate3d(12px,-8px,0) rotateX(3deg) rotateZ(.18deg) scale(1.065)}
+  100%{transform:translate(-50%,-50%) translate3d(-5px,-12px,0) rotateX(2deg) rotateZ(-.12deg) scale(1.05)}
+}
+@keyframes galaxyVignette{
+  from{opacity:.72;transform:scale(1)}
+  to{opacity:.95;transform:scale(1.03)}
+}
+@media (max-width:900px){
+  .galaxy-3d-bg{inset:-4vh -12vw;transform:none}
+  .galaxy-3d-bg img{width:125%;height:110%;animation-duration:24s}
+}
+@media (prefers-reduced-motion:reduce){
+  .galaxy-3d-bg,.galaxy-3d-bg img,.galaxy-3d-bg:after{animation:none;transition:none}
+}
