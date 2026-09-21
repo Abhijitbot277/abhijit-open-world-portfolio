@@ -640,3 +640,77 @@ footer{border-top-color:rgba(92,112,174,.16)}
 @media(max-width:900px){
  .hero:before{inset:15% 0 10% 0}
 }
+
+
+/* Cinematic galaxy background */
+body{
+  background:#010208 url('./assets/galaxy.svg') center top / cover fixed no-repeat;
+  background-attachment:fixed;
+}
+body:before{
+  background:
+    radial-gradient(circle at 50% 46%,rgba(255,180,245,.08),transparent 24%),
+    radial-gradient(circle at 22% 18%,rgba(66,110,255,.13),transparent 28%),
+    radial-gradient(circle at 82% 78%,rgba(157,70,255,.10),transparent 30%),
+    linear-gradient(180deg,rgba(1,2,8,.28),rgba(1,2,8,.72));
+  animation:galaxyAtmosphere 14s ease-in-out infinite alternate;
+}
+body:after{
+  opacity:.7;
+  background-image:
+    radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1.5px),
+    radial-gradient(circle at 72% 32%,#b7d7ff 0 .8px,transparent 1.4px),
+    radial-gradient(circle at 42% 78%,#fff 0 .7px,transparent 1.3px);
+  background-size:180px 180px,130px 130px,220px 220px;
+  animation:stars 90s linear infinite;
+}
+.space-bg{opacity:.35}
+.hero{
+  isolation:isolate;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  width:620px;
+  height:620px;
+  right:-80px;
+  top:10px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(92,116,255,.16),rgba(184,74,255,.08) 34%,transparent 68%);
+  filter:blur(18px);
+  z-index:-1;
+  animation:heroNebula 10s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.hero-visual:before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,183,236,.13),rgba(77,111,255,.08) 34%,transparent 70%);
+  filter:blur(24px);
+  animation:heroNebula 12s ease-in-out infinite alternate-reverse;
+}
+.project-card,.facts div,.timeline div,.skill-list span,.modal-detail>div{
+  background:rgba(3,9,20,.72);
+  backdrop-filter:blur(12px);
+}
+.nav{
+  background:rgba(2,4,12,.72);
+}
+.section,.projects-preview,footer{
+  border-color:rgba(107,126,255,.16);
+}
+@keyframes galaxyAtmosphere{
+  from{opacity:.75;transform:scale(1)}
+  to{opacity:1;transform:scale(1.035)}
+}
+@keyframes heroNebula{
+  from{transform:scale(.94) translate3d(0,0,0);opacity:.55}
+  to{transform:scale(1.08) translate3d(-10px,8px,0);opacity:1}
+}
+@media(max-width:600px){
+  body{background-position:center top}
+  .hero:before{width:430px;height:430px;right:-180px}
+}
