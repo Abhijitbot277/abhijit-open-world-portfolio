@@ -168,7 +168,7 @@ linear-gradient(135deg,#02050a,#07111f 55%,#03050b)}
   --max:1240px;
 }
 body{
-  background:#05070b;
+  background:#010208 url('./assets/galaxy.svg') center top / cover fixed no-repeat !important;
   color:var(--text);
   letter-spacing:-.005em;
 }
