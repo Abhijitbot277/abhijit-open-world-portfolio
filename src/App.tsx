@@ -152,7 +152,7 @@ export default function App() {
       <div className="loader" aria-hidden={!loading} data-hidden={!loading}>
         <div className="loader-inner">
           <span className="loader-mark">AS</span>
-          <span>SRI → Loading experience...</span>
+          <span>ABHIJIT → Loading experience...</span>
           <div className="loader-line"><i /></div>
         </div>
       </div>
