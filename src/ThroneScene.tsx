@@ -105,8 +105,13 @@ function Model({ progress }: Props) {
 export default function ThroneScene({ progress }: Props) {
   return (
     <div className="throne-3d-shell" aria-label="Interactive 3D portfolio hero">
+      <div className="space-stars" aria-hidden="true">
+        <i className="shooting-star shooting-star-1" />
+        <i className="shooting-star shooting-star-2" />
+        <i className="shooting-star shooting-star-3" />
+        <i className="shooting-star shooting-star-4" />
+      </div>
       <Canvas dpr={[1, 1.8]} camera={{ position: [7.2, 4.1, 9], fov: 38 }} gl={{ antialias: true, alpha: true }}>
-        <color attach="background" args={['#05040b']} />
         <fog attach="fog" args={['#05040b', 10, 23]} />
         <ambientLight intensity={1.65} />
         <spotLight position={[5, 9, 7]} intensity={95} angle={0.45} penumbra={0.8} />
