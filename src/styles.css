@@ -146,3 +146,88 @@ footer{padding:25px 5vw;border-top:1px solid var(--line);display:flex;justify-co
 @media(prefers-reduced-motion:reduce){
   .throne-3d-shell,.space-stars:before,.space-stars:after,.shooting-star{animation:none!important}
 }
+
+/* Full-portfolio animated space background */
+.global-starfield{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 20%,rgba(255,255,255,.95) 0 1px,transparent 2px),
+    radial-gradient(circle at 31% 72%,rgba(192,132,252,.95) 0 1.2px,transparent 2.4px),
+    radial-gradient(circle at 53% 14%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 74% 55%,rgba(168,85,247,.9) 0 1.2px,transparent 2.4px),
+    radial-gradient(circle at 91% 25%,rgba(255,255,255,.95) 0 1px,transparent 2px),
+    radial-gradient(circle at 67% 88%,rgba(216,180,254,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 18% 91%,rgba(168,85,247,.8) 0 1px,transparent 2px),
+    radial-gradient(ellipse at 50% 30%,#1d0b32 0%,transparent 48%);
+  background-size:190px 170px,240px 210px,270px 190px,220px 230px,300px 220px,260px 210px,230px 250px,100% 100%;
+  animation:global-stars-drift 32s linear infinite;
+}
+.global-starfield:before,.global-starfield:after{
+  content:'';
+  position:absolute;
+  inset:-25%;
+  background-repeat:repeat;
+  pointer-events:none;
+}
+.global-starfield:before{
+  background-image:
+    radial-gradient(circle,#fff 0 1px,transparent 1.8px),
+    radial-gradient(circle,#c084fc 0 .8px,transparent 1.6px);
+  background-size:145px 155px,205px 185px;
+  opacity:.45;
+  animation:global-layer-one 40s linear infinite;
+}
+.global-starfield:after{
+  background-image:
+    radial-gradient(circle,#fff 0 .7px,transparent 1.5px),
+    radial-gradient(circle,#a855f7 0 .7px,transparent 1.5px);
+  background-size:105px 125px,175px 150px;
+  opacity:.3;
+  animation:global-layer-two 24s linear infinite;
+}
+.global-shoot{
+  position:absolute;
+  width:170px;
+  height:2px;
+  border-radius:999px;
+  opacity:0;
+  background:linear-gradient(90deg,transparent,#a855f7 18%,#e9d5ff 65%,#fff);
+  box-shadow:0 0 8px #fff,0 0 20px #a855f7,0 0 38px #7c3aed;
+  transform:rotate(-32deg);
+}
+.global-shoot:after{
+  content:'';
+  position:absolute;
+  right:-1px;
+  top:50%;
+  width:7px;height:7px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px 2px #fff,0 0 20px 5px #a855f7;
+  transform:translateY(-50%);
+}
+.global-shoot-1{top:16%;left:4%;animation:global-shoot 6s 0s ease-in-out infinite}
+.global-shoot-2{top:34%;left:62%;width:130px;animation:global-shoot 8s 2s ease-in-out infinite}
+.global-shoot-3{top:8%;left:78%;width:190px;animation:global-shoot 9s 4s ease-in-out infinite}
+.global-shoot-4{top:67%;left:18%;width:110px;animation:global-shoot 7s 1s ease-in-out infinite}
+.site-nav,main,footer{position:relative;z-index:1}
+.grain{z-index:80}
+.cursor{z-index:100}
+@keyframes global-stars-drift{
+  from{background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0,center}
+  to{background-position:80px 55px,-65px 75px,90px -50px,-70px 65px,75px -55px,-90px 60px,65px -70px,center}
+}
+@keyframes global-layer-one{from{transform:translate(0,0)}to{transform:translate(-100px,70px)}}
+@keyframes global-layer-two{from{transform:translate(0,0)}to{transform:translate(80px,-55px)}}
+@keyframes global-shoot{
+  0%,65%{opacity:0;transform:translate(-120px,-70px) rotate(-32deg) scaleX(.25)}
+  70%{opacity:1}
+  83%{opacity:1;transform:translate(260px,155px) rotate(-32deg) scaleX(1)}
+  92%,100%{opacity:0;transform:translate(360px,215px) rotate(-32deg) scaleX(1.15)}
+}
+@media(prefers-reduced-motion:reduce){
+  .global-starfield,.global-starfield:before,.global-starfield:after,.global-shoot{animation:none!important}
+}
