@@ -42,37 +42,107 @@ footer{padding:25px 5vw;border-top:1px solid var(--line);display:flex;justify-co
 .student-strength{display:grid;grid-template-columns:55px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}.student-strength>span{font-size:9px;color:#77717d;padding-top:4px}.student-strength strong{display:block;font:600 19px Manrope;color:#eee9f1;letter-spacing:-.02em}.student-strength p{margin:7px 0 0;color:#827c89;font-size:11px;line-height:1.65;max-width:480px}.why-section .copy{align-self:start}.why-section .editorial-list{margin-top:28px}.why-section .display{margin-top:0}@media(max-width:700px){.student-strength{grid-template-columns:42px 1fr;gap:10px}.student-strength strong{font-size:17px}}
 
 
-/* Cinematic animated space background */
-.throne-3d-shell{isolation:isolate}
-.space-stars{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:
-radial-gradient(circle at 18% 22%,#ffffff 0 1px,transparent 1.5px),
-radial-gradient(circle at 42% 12%,#d8b4fe 0 1px,transparent 1.6px),
-radial-gradient(circle at 76% 18%,#ffffff 0 1.2px,transparent 1.8px),
-radial-gradient(circle at 91% 42%,#c084fc 0 1px,transparent 1.6px),
-radial-gradient(circle at 12% 68%,#ffffff 0 1px,transparent 1.5px),
-radial-gradient(circle at 63% 78%,#e9d5ff 0 1.1px,transparent 1.7px),
-radial-gradient(circle at 34% 91%,#a855f7 0 1px,transparent 1.5px);
-background-size:260px 220px,310px 270px,360px 300px,290px 250px,330px 280px,390px 320px,300px 260px;
-animation:star-drift 24s linear infinite;
+
+/* Cinematic animated starfield — visible behind the 3D hero */
+.throne-3d-shell{
+  isolation:isolate;
+  background-color:#03020a;
+  background-image:
+    radial-gradient(circle at 8% 12%,rgba(255,255,255,.95) 0 1px,transparent 2px),
+    radial-gradient(circle at 22% 78%,rgba(192,132,252,.95) 0 1.2px,transparent 2.2px),
+    radial-gradient(circle at 38% 24%,rgba(255,255,255,.9) 0 .9px,transparent 2px),
+    radial-gradient(circle at 52% 88%,rgba(168,85,247,.9) 0 1.1px,transparent 2.2px),
+    radial-gradient(circle at 67% 16%,rgba(255,255,255,.95) 0 1.2px,transparent 2.2px),
+    radial-gradient(circle at 82% 72%,rgba(216,180,254,.95) 0 1px,transparent 2px),
+    radial-gradient(circle at 94% 30%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 15% 46%,rgba(168,85,247,.8) 0 .8px,transparent 2px),
+    radial-gradient(circle at 48% 52%,rgba(255,255,255,.75) 0 .8px,transparent 2px),
+    radial-gradient(circle at 74% 46%,rgba(192,132,252,.8) 0 1px,transparent 2px),
+    radial-gradient(ellipse at 50% 45%,#24103b 0%,#0b0714 42%,#03020a 82%);
+  background-size:
+    180px 160px,220px 190px,260px 210px,310px 240px,230px 180px,
+    280px 230px,190px 170px,250px 210px,330px 260px,290px 220px,100% 100%;
+  animation:space-background-drift 28s linear infinite;
 }
-.space-stars:before,.space-stars:after{content:'';position:absolute;inset:-35%;background-repeat:repeat;background-size:210px 190px;opacity:.65}
-.space-stars:before{background-image:
-radial-gradient(circle,#fff 0 1px,transparent 1.5px),
-radial-gradient(circle,#a855f7 0 .8px,transparent 1.4px);
-background-position:0 0,90px 70px;animation:star-drift-reverse 34s linear infinite}
-.space-stars:after{background-image:
-radial-gradient(circle,#fff 0 .7px,transparent 1.3px),
-radial-gradient(circle,#c084fc 0 .8px,transparent 1.4px);
-background-position:40px 110px,160px 20px;animation:star-drift 46s linear infinite;opacity:.4}
-.shooting-star{position:absolute;z-index:2;width:130px;height:2px;border-radius:999px;background:linear-gradient(90deg,transparent,#d8b4fe 35%,#fff 72%,transparent);box-shadow:0 0 8px #a855f7,0 0 22px #7c3aed;transform:rotate(-32deg);opacity:0;filter:blur(.15px)}
-.shooting-star:after{content:'';position:absolute;right:2px;top:50%;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #fff,0 0 18px 5px #a855f7;transform:translateY(-50%)}
-.shooting-star-1{top:18%;left:8%;animation:shoot 7s 1s ease-in-out infinite}
-.shooting-star-2{top:38%;left:55%;width:100px;animation:shoot 9s 4s ease-in-out infinite}
-.shooting-star-3{top:8%;left:72%;width:155px;animation:shoot 11s 6s ease-in-out infinite}
-.shooting-star-4{top:62%;left:18%;width:90px;animation:shoot 8s 3s ease-in-out infinite}
-.throne-3d-shell canvas{position:relative;z-index:1}
-.throne-3d-shell .hero-visual-note{z-index:4}
-@keyframes star-drift{from{background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0}to{background-position:90px 55px,-70px 80px,120px -50px,-90px 60px,70px -80px,-110px 45px,85px 70px}}
-@keyframes star-drift-reverse{from{transform:translate3d(0,0,0)}to{transform:translate3d(-80px,55px,0)}}
-@keyframes shoot{0%,72%{opacity:0;transform:translate3d(-120px,-60px,0) rotate(-32deg) scaleX(.35)}76%{opacity:1}88%{opacity:1;transform:translate3d(180px,110px,0) rotate(-32deg) scaleX(1)}100%{opacity:0;transform:translate3d(300px,180px,0) rotate(-32deg) scaleX(1.15)}}
-@media(prefers-reduced-motion:reduce){.space-stars,.space-stars:before,.space-stars:after,.shooting-star{animation:none!important}}
+.throne-3d-shell canvas{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
+}
+.space-stars{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  overflow:hidden;
+  pointer-events:none;
+}
+.space-stars:before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 6% 35%,#fff 0 1.4px,transparent 2.8px),
+    radial-gradient(circle at 18% 18%,#c084fc 0 1.5px,transparent 3px),
+    radial-gradient(circle at 31% 65%,#fff 0 1px,transparent 2.5px),
+    radial-gradient(circle at 44% 10%,#d8b4fe 0 1.4px,transparent 3px),
+    radial-gradient(circle at 58% 32%,#fff 0 1.2px,transparent 2.8px),
+    radial-gradient(circle at 71% 82%,#c084fc 0 1.4px,transparent 3px),
+    radial-gradient(circle at 87% 14%,#fff 0 1.3px,transparent 2.8px),
+    radial-gradient(circle at 96% 64%,#d8b4fe 0 1.2px,transparent 2.8px);
+  opacity:.8;
+  animation:star-twinkle 4s ease-in-out infinite alternate;
+}
+.space-stars:after{
+  content:'';
+  position:absolute;
+  inset:-20%;
+  background-image:
+    radial-gradient(circle,#fff 0 1px,transparent 1.8px),
+    radial-gradient(circle,#a855f7 0 .8px,transparent 1.6px);
+  background-size:150px 140px,210px 180px;
+  opacity:.3;
+  animation:star-layer-drift 38s linear infinite;
+}
+.shooting-star{
+  position:absolute;
+  z-index:5;
+  width:150px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#a855f7 20%,#e9d5ff 65%,#fff 100%);
+  box-shadow:0 0 6px #fff,0 0 16px #a855f7,0 0 34px #7c3aed;
+  opacity:0;
+  transform:rotate(-32deg);
+}
+.shooting-star:after{
+  content:'';
+  position:absolute;
+  right:-1px;
+  top:50%;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 7px 2px #fff,0 0 18px 5px #a855f7;
+  transform:translateY(-50%);
+}
+.shooting-star-1{top:13%;left:7%;animation:shoot-visible 5.5s 0s ease-in-out infinite}
+.shooting-star-2{top:28%;left:70%;width:120px;animation:shoot-visible 7s 2.2s ease-in-out infinite}
+.shooting-star-3{top:7%;left:48%;width:170px;animation:shoot-visible 8s 4s ease-in-out infinite}
+.shooting-star-4{top:58%;left:3%;width:105px;animation:shoot-visible 6.5s 1.2s ease-in-out infinite}
+.throne-3d-shell .hero-visual-note{z-index:6}
+@keyframes space-background-drift{
+  from{background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,center}
+  to{background-position:70px 50px,-55px 75px,90px -45px,-80px 55px,65px -70px,-100px 45px,80px 60px,-60px -40px,95px 35px,-75px 65px,center}
+}
+@keyframes star-layer-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-100px,70px,0)}}
+@keyframes star-twinkle{from{opacity:.35}to{opacity:1}}
+@keyframes shoot-visible{
+  0%,62%{opacity:0;transform:translate3d(-80px,-45px,0) rotate(-32deg) scaleX(.25)}
+  68%{opacity:1}
+  82%{opacity:1;transform:translate3d(210px,125px,0) rotate(-32deg) scaleX(1)}
+  90%,100%{opacity:0;transform:translate3d(310px,185px,0) rotate(-32deg) scaleX(1.1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .throne-3d-shell,.space-stars:before,.space-stars:after,.shooting-star{animation:none!important}
+}
