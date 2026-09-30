@@ -166,6 +166,7 @@ export default function App() {
           <a href="#about" data-cursor="ABOUT">About</a>
           <a href="#work" data-cursor="WORK">Work</a>
           <a href="#skills" data-cursor="SKILLS">Skills</a>
+          <a href="#services" data-cursor="SERVICES">What I Build</a>
           <a href="#contact" data-cursor="CONTACT">Contact</a>
         </nav>
         <a className="nav-cta" href="#contact">Let's Work Together <ArrowUpRight size={14} /></a>
@@ -175,7 +176,7 @@ export default function App() {
       {menuOpen && (
         <div className="mobile-menu">
           <button onClick={() => setMenuOpen(false)} aria-label="Close menu"><X /></button>
-          {['about', 'work', 'skills', 'contact'].map((id) => (
+          {['about', 'work', 'skills', 'services', 'contact'].map((id) => (
             <a key={id} href={'#' + id} onClick={() => setMenuOpen(false)}>{id}</a>
           ))}
         </div>
@@ -259,6 +260,49 @@ export default function App() {
               {skills.map(([label, value]) => (
                 <div className="skill-line" key={label}><span>{label}</span><strong>{value}</strong></div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="section services-section">
+          <div className="section-kicker">04 — WHAT I CAN DO</div>
+          <h2 className="display service-heading">What I’m<br /><em>building.</em></h2>
+          <div className="service-grid">
+            {[
+              ['01', 'Web Development', 'Building responsive websites and portfolio experiences while growing my frontend and development skills.'],
+              ['02', 'AI & Automation', 'Exploring practical AI tools, local agents and automation workflows through hands-on projects.'],
+              ['03', 'UI / UX & Creative Design', 'Creating clean interfaces, visual systems and interactive experiences with a focus on presentation.'],
+              ['04', 'Engineering Projects', 'Turning EEE concepts and ideas into practical software, hardware and prototype projects.'],
+              ['05', 'Hackathon Projects', 'Working on problem-focused ideas, technical documentation, presentations and prototypes for competitions such as SIH.'],
+              ['06', 'Learning & Experimentation', 'Continuously experimenting with new technologies and turning what I learn into visible projects.'],
+            ].map(([n, title, desc]) => (
+              <article key={n} className="service-item" data-cursor="EXPLORE">
+                <span>{n}</span><h3>{title}</h3><p>{desc}</p><ArrowUpRight />
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section why-section">
+          <div className="section-kicker">05 — WHY WORK WITH ME</div>
+          <div className="split">
+            <h2 className="display small">A student<br /><em>who builds.</em></h2>
+            <div className="copy">
+              <p>I’m not presenting myself as a finished expert. I’m a student actively learning, building and improving through real projects.</p>
+              <div className="editorial-list">
+                {[
+                  ['01', 'Engineering + Software', 'EEE background combined with hands-on software and AI exploration.'],
+                  ['02', 'Project First', 'I learn by turning ideas into working prototypes and documented projects.'],
+                  ['03', 'Curious by Default', 'I enjoy exploring unfamiliar tools, technologies and technical problems.'],
+                  ['04', 'Practical Mindset', 'I focus on making ideas understandable, presentable and useful.'],
+                  ['05', 'Always Improving', 'Every project is an opportunity to improve my technical and creative skills.'],
+                ].map(([n, title, desc]) => (
+                  <div key={n} className="student-strength">
+                    <span>{n}</span>
+                    <div><strong>{title}</strong><p>{desc}</p></div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
