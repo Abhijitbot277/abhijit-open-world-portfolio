@@ -158,6 +158,12 @@ export default function App() {
       </div>
 
       <div className="cursor" aria-hidden="true" />
+      <div className="global-starfield" aria-hidden="true">
+        <span className="global-shoot global-shoot-1" />
+        <span className="global-shoot global-shoot-2" />
+        <span className="global-shoot global-shoot-3" />
+        <span className="global-shoot global-shoot-4" />
+      </div>
       <div className="grain" />
 
       <header className="site-nav">
