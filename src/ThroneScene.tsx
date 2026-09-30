@@ -1,219 +1,121 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import {
-  ContactShadows,
-  Environment,
-  RoundedBox,
-  Text,
-  useGLTF,
-} from '@react-three/drei';
-import { useMemo, useRef } from 'react';
+import { Environment } from '@react-three/drei';
+import { useRef } from 'react';
 import * as THREE from 'three';
 
 type Props = { progress: number };
 
-const HERO_MODEL =
-  'https://storage.to3d.app/generated-3d/models/2026-09-30/task_8f7969dc-4716-482b-9344-2b4a173fc90f_model.glb';
-
-function RealisticHeroModel({ progress }: Props) {
-  const root = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(HERO_MODEL);
-
-  const model = useMemo(() => {
-    const clone = scene.clone(true);
-
-    clone.traverse((object) => {
-      if (!object.isMesh) return;
-
-      object.castShadow = true;
-      object.receiveShadow = true;
-
-      const material = object.material;
-      if (Array.isArray(material)) {
-        material.forEach((m) => {
-          m.needsUpdate = true;
-          if ('envMapIntensity' in m) m.envMapIntensity = 1.35;
-        });
-      } else {
-        material.needsUpdate = true;
-        if ('envMapIntensity' in material) material.envMapIntensity = 1.35;
-      }
-    });
-
-    // Normalize the generated model so it stays sharp and consistently framed.
-    const bounds = new THREE.Box3().setFromObject(clone);
-    const size = bounds.getSize(new THREE.Vector3());
-    const center = bounds.getCenter(new THREE.Vector3());
-    const height = Math.max(size.y, 0.001);
-    const scale = 6.9 / height;
-
-    clone.scale.setScalar(scale);
-    clone.position.set(
-      -center.x * scale,
-      -center.y * scale + 0.25,
-      -center.z * scale,
-    );
-
-    return clone;
-  }, [scene]);
-
+function Model({ progress }: Props) {
+  const group = useRef<THREE.Group>(null);
   useFrame(() => {
-    if (root.current) {
-      root.current.rotation.y = progress * Math.PI * 2;
-    }
+    if (!group.current) return;
+    group.current.rotation.y = progress * Math.PI * 2;
   });
 
   return (
-    <group ref={root} position={[0, -0.9, 0]}>
-      <primitive object={model} />
-    </group>
-  );
-}
-
-useGLTF.preload(HERO_MODEL);
-
-function OrbitRig() {
-  const ref = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.rotation.z = state.clock.elapsedTime * 0.075;
-    }
-  });
-
-  return (
-    <group ref={ref} position={[0, 2.2, 0]}>
-      <mesh rotation={[Math.PI / 2.35, 0.18, 0]}>
-        <torusGeometry args={[3.7, 0.018, 12, 192]} />
-        <meshBasicMaterial color="#a855f7" transparent opacity={0.62} />
+    <group ref={group} position={[0, -1.65, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]}>
+        <circleGeometry args={[4.8, 96]} />
+        <meshStandardMaterial color="#090909" roughness={0.72} metalness={0.25} />
       </mesh>
-      <mesh rotation={[Math.PI / 2, -0.42, 0.6]}>
-        <torusGeometry args={[4.15, 0.011, 12, 192]} />
-        <meshBasicMaterial color="#c084fc" transparent opacity={0.36} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[3.7, 4.35, 96]} />
+        <meshStandardMaterial color="#6d28d9" emissive="#24103f" emissiveIntensity={0.7} metalness={0.5} roughness={0.35} />
       </mesh>
-    </group>
-  );
-}
-
-function Holo({
-  position,
-  label,
-}: {
-  position: [number, number, number];
-  label: string;
-}) {
-  return (
-    <group position={position}>
-      <RoundedBox args={[1.65, 0.95, 0.055]} radius={0.09} smoothness={6}>
-        <meshPhysicalMaterial
-          color="#090711"
-          emissive="#7c3aed"
-          emissiveIntensity={0.25}
-          metalness={0.62}
-          roughness={0.18}
-          transparent
-          opacity={0.86}
-        />
-      </RoundedBox>
-
-      <Text
-        position={[0, 0.02, 0.05]}
-        fontSize={0.22}
-        color="#e9d5ff"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {label}
-      </Text>
-
-      <mesh position={[0, -0.31, 0.055]}>
-        <boxGeometry args={[1.0, 0.018, 0.018]} />
-        <meshBasicMaterial color="#a855f7" />
+      <mesh position={[0, 2.1, -0.5]}>
+        <boxGeometry args={[4.9, 5.4, 0.7]} />
+        <meshStandardMaterial color="#100c14" metalness={0.7} roughness={0.28} />
       </mesh>
+      <mesh position={[0, 2, -0.86]}>
+        <boxGeometry args={[4.05, 4.65, 0.24]} />
+        <meshStandardMaterial color="#24113d" emissive="#130521" emissiveIntensity={0.8} roughness={0.62} />
+      </mesh>
+      <mesh position={[0, 5.2, -0.45]}>
+        <boxGeometry args={[5.55, 0.34, 0.8]} />
+        <meshStandardMaterial color="#a855f7" metalness={0.85} roughness={0.2} />
+      </mesh>
+      {[-2.25, -1.35, -0.45, 0.45, 1.35, 2.25].map((x, i) => (
+        <mesh key={i} position={[x, 5.75 + (i % 2 ? 0.18 : 0), -0.45]} rotation={[0, 0, i % 2 ? 0.12 : -0.12]}>
+          <coneGeometry args={[0.28, 1, 4]} />
+          <meshStandardMaterial color="#d8b4fe" metalness={0.9} roughness={0.18} />
+        </mesh>
+      ))}
+      {[-2.35, 2.35].map((x) => (
+        <group key={x}>
+          <mesh position={[x, 1.25, -0.05]}>
+            <boxGeometry args={[0.48, 2.2, 2.5]} />
+            <meshStandardMaterial color="#15111e" metalness={0.75} roughness={0.3} />
+          </mesh>
+          <mesh position={[x, 2.35, -0.05]}>
+            <boxGeometry args={[0.72, 0.22, 2.65]} />
+            <meshStandardMaterial color="#c4b5fd" metalness={0.88} roughness={0.2} />
+          </mesh>
+        </group>
+      ))}
+      <mesh position={[0, 0.65, 0.15]}>
+        <boxGeometry args={[3.85, 0.62, 2.35]} />
+        <meshStandardMaterial color="#090909" metalness={0.35} roughness={0.42} />
+      </mesh>
+      <mesh position={[0, 0.98, 0.05]}>
+        <boxGeometry args={[3.45, 0.25, 1.95]} />
+        <meshStandardMaterial color="#32154f" emissive="#1b0730" emissiveIntensity={0.5} roughness={0.55} />
+      </mesh>
+      <group position={[0, 0.15, 0.35]}>
+        <mesh position={[0, 2.55, 0]}>
+          <capsuleGeometry args={[0.66, 1.65, 10, 20]} />
+          <meshStandardMaterial color="#030303" roughness={0.38} />
+        </mesh>
+        <mesh position={[0, 3.85, 0]}>
+          <sphereGeometry args={[0.58, 32, 24]} />
+          <meshStandardMaterial color="#7a4a32" roughness={0.7} />
+        </mesh>
+        <mesh position={[0, 4.12, -0.02]} scale={[1.02, 0.62, 1]}>
+          <sphereGeometry args={[0.61, 32, 20]} />
+          <meshStandardMaterial color="#030303" roughness={0.72} />
+        </mesh>
+        {[-1, 1].map((s) => (
+          <group key={s}>
+            <mesh position={[s * 0.82, 2.52, 0.02]} rotation={[0, 0, s * 0.48]}>
+              <capsuleGeometry args={[0.19, 1.1, 8, 16]} />
+              <meshStandardMaterial color="#050505" roughness={0.4} />
+            </mesh>
+            <mesh position={[s * 1.28, 1.95, 0.04]}>
+              <sphereGeometry args={[0.22, 18, 14]} />
+              <meshStandardMaterial color="#7a4a32" roughness={0.7} />
+            </mesh>
+            <mesh position={[s * 0.45, 1.2, 0.42]}>
+              <capsuleGeometry args={[0.3, 1.55, 8, 16]} />
+              <meshStandardMaterial color="#030303" roughness={0.42} />
+            </mesh>
+            <mesh position={[s * 0.5, 0.52, 0.82]} rotation={[Math.PI / 2, 0, 0]}>
+              <capsuleGeometry args={[0.22, 1.05, 8, 16]} />
+              <meshStandardMaterial color="#020202" roughness={0.42} />
+            </mesh>
+            <mesh position={[s * 0.5, 0.02, 1.18]}>
+              <boxGeometry args={[0.58, 0.24, 1.1]} />
+              <meshStandardMaterial color="#020202" roughness={0.4} />
+            </mesh>
+          </group>
+        ))}
+      </group>
     </group>
   );
 }
 
 export default function ThroneScene({ progress }: Props) {
   return (
-    <div
-      className="throne-3d-shell"
-      aria-label="High quality realistic 3D portrait of Abhijit Singha"
-    >
-      <Canvas
-        shadows
-        dpr={[1, 2.5]}
-        camera={{ position: [7.1, 3.9, 9.5], fov: 36 }}
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: 'high-performance',
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.05,
-        }}
-        onCreated={({ gl }) => {
-          gl.outputColorSpace = THREE.SRGBColorSpace;
-          gl.shadowMap.type = THREE.PCFSoftShadowMap;
-        }}
-      >
-        <color attach="background" args={['#040309']} />
-        <fog attach="fog" args={['#040309', 11, 28]} />
-
-        <ambientLight intensity={1.0} />
-        <hemisphereLight args={['#f7efff', '#08030f', 1.15]} />
-
-        <spotLight
-          position={[5.5, 8.5, 6]}
-          intensity={145}
-          angle={0.42}
-          penumbra={0.82}
-          castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
-          shadow-bias={-0.00012}
-        />
-
-        <spotLight
-          position={[-5.5, 6.2, 3]}
-          intensity={105}
-          angle={0.55}
-          penumbra={0.9}
-          color="#7c3aed"
-        />
-
-        <pointLight
-          position={[0, 4.5, 5]}
-          intensity={24}
-          color="#f1e5ff"
-        />
-
-        <pointLight
-          position={[0, 2, -3]}
-          intensity={20}
-          color="#6d28d9"
-        />
-
-        <RealisticHeroModel progress={progress} />
-        <OrbitRig />
-
-        <Holo position={[-3.4, 5.5, 0.2]} label="</>" />
-        <Holo position={[3.4, 5.55, 0.1]} label="C++" />
-        <Holo position={[-3.55, 3.15, 0.4]} label="AI" />
-        <Holo position={[3.55, 3.15, 0.4]} label="EEE" />
-
-        <ContactShadows
-          position={[0, -1.7, 0]}
-          opacity={0.52}
-          scale={10}
-          blur={2.5}
-          far={5}
-        />
-
-        <Environment preset="city" background={false} />
+    <div className="throne-3d-shell" aria-label="Interactive 3D portfolio hero">
+      <Canvas dpr={[1, 1.8]} camera={{ position: [7.2, 4.1, 9], fov: 38 }} gl={{ antialias: true, alpha: true }}>
+        <color attach="background" args={['#05040b']} />
+        <fog attach="fog" args={['#05040b', 10, 23]} />
+        <ambientLight intensity={1.65} />
+        <spotLight position={[5, 9, 7]} intensity={95} angle={0.45} penumbra={0.8} />
+        <spotLight position={[-6, 5, 2]} intensity={55} angle={0.6} color="#7c3aed" />
+        <pointLight position={[0, 2, 4]} intensity={20} color="#c084fc" />
+        <Model progress={progress} />
+        <Environment preset="night" />
       </Canvas>
-
-      <div className="hero-visual-note">
-        <span /> HIGH-QUALITY 3D CHARACTER · 360° TURN
-      </div>
+      <div className="hero-visual-note"><span /> 360° SCROLL TURN</div>
     </div>
   );
 }
