@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import type { FormEvent } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { ArrowDown, ArrowUpRight, Menu, X, Github, ExternalLink } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Menu, X, Github } from 'lucide-react';
 import ThroneScene from './ThroneScene';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -53,7 +54,6 @@ const skills = [
 
 export default function App() {
   const heroRef = useRef<HTMLElement | null>(null);
-  const progressRef = useRef(0);
   const [heroProgress, setHeroProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,6 @@ export default function App() {
           pin: true,
           anticipatePin: 1,
           onUpdate: (self) => {
-            progressRef.current = self.progress;
             setHeroProgress(self.progress);
           },
         },
@@ -142,7 +141,7 @@ export default function App() {
     };
   }, []);
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormSent(true);
     e.currentTarget.reset();
