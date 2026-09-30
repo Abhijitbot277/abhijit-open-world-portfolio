@@ -166,7 +166,6 @@ export default function App() {
           <a href="#about" data-cursor="ABOUT">About</a>
           <a href="#work" data-cursor="WORK">Work</a>
           <a href="#skills" data-cursor="SKILLS">Skills</a>
-          <a href="#services" data-cursor="SERVICES">Services</a>
           <a href="#contact" data-cursor="CONTACT">Contact</a>
         </nav>
         <a className="nav-cta" href="#contact">Let's Work Together <ArrowUpRight size={14} /></a>
@@ -176,7 +175,7 @@ export default function App() {
       {menuOpen && (
         <div className="mobile-menu">
           <button onClick={() => setMenuOpen(false)} aria-label="Close menu"><X /></button>
-          {['about', 'work', 'skills', 'services', 'contact'].map((id) => (
+          {['about', 'work', 'skills', 'contact'].map((id) => (
             <a key={id} href={'#' + id} onClick={() => setMenuOpen(false)}>{id}</a>
           ))}
         </div>
@@ -261,34 +260,6 @@ export default function App() {
                 <div className="skill-line" key={label}><span>{label}</span><strong>{value}</strong></div>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section id="services" className="section services-section">
-          <div className="section-kicker">04 — SERVICES</div>
-          <h2 className="display service-heading">Let's build something<br /><em>worth remembering.</em></h2>
-          <div className="service-grid">
-            {[
-              ['01', 'Premium Portfolio Websites', 'Editorial personal sites with motion, interaction and a strong first impression.'],
-              ['02', 'Business Websites', 'Clean, responsive websites designed around a real brand and customer journey.'],
-              ['03', 'Interactive Websites', 'Scroll-linked experiences and micro-interactions where motion adds meaning.'],
-              ['04', 'Landing Pages', 'Focused pages for products, campaigns and launches.'],
-              ['05', 'AI-Powered Web Applications', 'Interfaces that connect useful AI capabilities to practical workflows.'],
-              ['06', 'Custom Development', 'Project-first engineering across frontend, tooling and connected experiences.'],
-            ].map(([n, title, desc]) => (
-              <article key={n} className="service-item" data-cursor="EXPLORE">
-                <span>{n}</span><h3>{title}</h3><p>{desc}</p><ArrowUpRight />
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section why-section">
-          <div className="section-kicker">05 — WHY WORK WITH ME</div>
-          <div className="editorial-list">
-            {['Design + Development', 'Built around your brand', 'Responsive by default', 'Performance focused', 'Interactive when it matters', 'Made to create a strong first impression'].map((item, i) => (
-              <div key={item} className="editorial-item"><span>0{i + 1}</span><strong>{item}</strong></div>
-            ))}
           </div>
         </section>
 
