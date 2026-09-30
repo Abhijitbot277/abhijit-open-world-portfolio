@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, Float } from '@react-three/drei';
+import { Environment } from '@react-three/drei';
 import { useRef } from 'react';
 import * as THREE from 'three';
 
@@ -112,9 +112,7 @@ export default function ThroneScene({ progress }: Props) {
         <spotLight position={[5, 9, 7]} intensity={95} angle={0.45} penumbra={0.8} />
         <spotLight position={[-6, 5, 2]} intensity={55} angle={0.6} color="#7c3aed" />
         <pointLight position={[0, 2, 4]} intensity={20} color="#c084fc" />
-        <Float speed={0.55} rotationIntensity={0.02} floatIntensity={0.06}>
-          <Model progress={progress} />
-        </Float>
+        <Model progress={progress} />
         <Environment preset="night" />
       </Canvas>
       <div className="hero-visual-note"><span /> 360° SCROLL TURN</div>
