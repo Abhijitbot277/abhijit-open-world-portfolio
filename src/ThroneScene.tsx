@@ -4,7 +4,6 @@ import {
   Environment,
   RoundedBox,
   Text,
-  useGLTF,
 } from '@react-three/drei';
 import { useRef } from 'react';
 import * as THREE from 'three';
