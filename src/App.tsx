@@ -217,44 +217,19 @@ export default function App() {
           <a className="scroll-indicator" href="#about">SCROLL TO EXPLORE <ArrowDown size={15} /></a>
         </section>
 
-        <section id="about" className="section about-section about-visual-section">
-          <div className="section-kicker">01 — ABOUT ME</div>
-          <div className="about-visual-card reveal">
-            <div className="about-copy-panel">
-              <h2 className="display about-image-title">About <em>Me</em></h2>
-              <p>I’m <strong>Abhijit Singha</strong>, a B.Tech student in <strong>Electrical &amp; Electronics Engineering (EEE)</strong> at <strong>Swami Vivekananda Institute of Science and Technology (SVIST)</strong>.</p>
-              <p>I enjoy building practical projects across <strong>web development, AI, automation, UI/UX</strong> and hardware-oriented systems. My current focus is improving my programming fundamentals while turning project ideas into usable prototypes.</p>
-              <div className="about-facts-grid">
-                <div><span className="fact-icon">✦</span><span>B.Tech — Electrical &amp; Electronics Engineering</span></div>
-                <div><span className="fact-icon">⌖</span><span>Kolkata, West Bengal, India</span></div>
-                <div><span className="fact-icon">▣</span><span>Web Development, AI, Automation &amp; Product Building</span></div>
-                <div><span className="fact-icon">⌘</span><span>Python fundamentals · Canva · MS Office · Modern web tooling</span></div>
-                <div><span className="fact-icon">⚒</span><span>Building and refining personal projects</span></div>
+        <section id="about" className="section about-section">
+          <div className="section-kicker">01 — ABOUT</div>
+          <div className="split">
+            <h2 className="display">More than<br /><em>a developer.</em></h2>
+            <div className="copy">
+              <p>I’m Abhijit Singha, a B.Tech Electrical &amp; Electronics Engineering student at SVIST under MAKAUT.</p>
+              <p>I work across software, AI fundamentals, UI/UX, creative tools and engineering ideas, using projects to learn and turn concepts into working experiences.</p>
+              <div className="stat-row">
+                <div><strong>EEE</strong><span>Engineering</span></div>
+                <div><strong>AI</strong><span>Exploration</span></div>
+                <div><strong>SIH</strong><span>Project Work</span></div>
               </div>
             </div>
-            <div className="about-art-panel" aria-label="Floating technology illustration">
-              <div className="about-orbit about-orbit-one"></div>
-              <div className="about-orbit about-orbit-two"></div>
-              <div className="about-code-cube"><span>&lt;</span><span>/</span><span>&gt;</span></div>
-              <span className="float-chip chip-one">WEB DEVELOPMENT</span>
-              <span className="float-chip chip-two">AI EXPLORATION</span>
-              <span className="float-chip chip-three">ENGINEERING</span>
-              <span className="float-chip chip-four">BUILD · LEARN · REPEAT</span>
-              <span className="about-art-caption">CURIOUS MIND. PRACTICAL BUILDER.</span>
-            </div>
-          </div>
-          <div className="about-project-heading"><span>✦</span><h3>Featured <em>Projects</em></h3><i></i></div>
-          <div className="about-feature-grid">
-            <a className="about-feature-card feature-blue" href="https://github.com/Abhijitbot277/Deep_Packet" target="_blank" rel="noreferrer">
-              <span className="feature-symbol">⌘</span><span className="feature-category">NETWORK SECURITY</span>
-              <h4>Deep Packet</h4><p>C++17 Deep Packet Inspection engine for PCAP analysis, traffic classification, TLS SNI inspection and rule-based filtering.</p>
-              <span className="feature-stack">STACK: C++17 · PCAP · MULTITHREADING · NETWORK ANALYSIS</span><span className="feature-link">◉ &nbsp; Source Code ↗</span>
-            </a>
-            <a className="about-feature-card feature-violet" href="#work">
-              <span className="feature-symbol">⚠</span><span className="feature-category">IOT + AI</span>
-              <h4>AIR SENTINAL</h4><p>Safety-focused concept for a passive colorimetric H₂S dosimeter wristband with AI-assisted reading, worker identification, alerts and dashboard connectivity.</p>
-              <span className="feature-stack">FOCUS: SAFETY · AI · IOT · AUTOMATION</span><span className="feature-link">↗ &nbsp; Explore Project</span>
-            </a>
           </div>
         </section>
 
